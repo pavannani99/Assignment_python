@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+data_ingestion.db
+data/stores_master_500k.csv
+.env
