@@ -1,9 +1,3 @@
-"""
-Standalone performance test for 500K store ingestion.
-Bypasses HTTP and calls the service layer directly so we get accurate timing.
-Resets the stores table first so numbers are clean.
-"""
-
 import sys, os, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -11,7 +5,7 @@ from app.database import engine, Base, SessionLocal
 from app.models import Store, StoreBrand, StoreType, City, State, Country, Region
 from app.services import ingest_stores_chunked
 
-# ---- Reset stores (keep lookup tables to avoid re-creating them) ----
+
 with engine.connect() as conn:
     conn.execute(Store.__table__.delete())
     conn.commit()
@@ -32,7 +26,7 @@ elapsed = time.time() - start
 
 db.close()
 
-# ---- Report ----
+
 print("\n" + "="*55)
 print("  500K STORE INGESTION — PERFORMANCE REPORT")
 print("="*55)
