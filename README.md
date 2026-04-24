@@ -1,43 +1,43 @@
-# Retail Data Ingestion API
+Retail Data Ingestion API
 
-A robust FastAPI backend service designed to ingest, validate, and normalize large master data sets (stores, users, and mapping data).
+I built this Retail Data Ingestion API using FastAPI to handle uploading csv files like stores, users and mapping data.
 
-## Features
-- **FastAPI / SQLAlchemy** using SQLite (swappable to PostgreSQL)
-- **Comprehensive Validation**: format checks, constraints, lengths, and foreign key dependencies.
-- **Fail-Resilient Processing**: Skips invalid rows and returns a detailed JSON error report instead of aborting huge ETL payloads.
-- **Performance Optimized**: Features sequential chunking and `bulk_insert_mappings()` over row-by-row iteration for ingestion of 500K+ records.
+The main idea of the Retail Data Ingestion API was to make sure that even if the data is messy the Retail Data Ingestion API system should still work properly and not break.
 
-## Setup & Run
+What the Retail Data Ingestion API does
 
-```bash
-# 1. Install Dependencies
-pip install -r requirements.txt
+* It takes files checks each row properly and only inserts valid data into the database.
 
-# 2. Run the Server
-uvicorn app.main:app --reload
-```
+* If there are errors it does not stop everything. It just skips those rows. Tells which rows failed and why.
 
-## Performance Evidence
+I used SQLAlchemy with SQLite for the Retail Data Ingestion API for now. It can be changed to Postgres easily.
 
-Ingesting a **500,000 row CSV** (`stores_master_500k.csv`):
+For files instead of processing everything at once I used chunking and bulk insert so the Retail Data Ingestion API does not become slow.
 
-```text
-=======================================================
-  500K STORE INGESTION — PERFORMANCE REPORT
-=======================================================
-  Total rows in file  : 500,000
-  Rows succeeded      : 491,449
-  Rows failed         : 8,551
-  Chunk size          : 5,000
-  Wall-clock time     : 268.73s (~4.5 mins)
-  Throughput          : 1,861 rows/sec
+How to run the Retail Data Ingestion API
 
-  Sample errors (first 5):
-    Row 49 | store_id | Duplicate store_id 'STR-0000026' within the file
-    Row 83 | title | Required field is missing or empty
-    Row 84 | latitude | Invalid latitude value 'INVALID' — must be a number
-    Row 283 | name | Exceeds max length of 255 characters (got 300)
-    Row 335 | latitude | Invalid latitude value 'INVALID' — must be a number
-=======================================================
-```
+1. Run pip install -r requirements.txt
+
+2. Run app.main:app --reload
+
+I did a performance test of the Retail Data Ingestion API using a 500k file.
+
+Here are the results of the performance test of the Retail Data Ingestion API:
+
+* Total rows: 500000
+
+* Inserted: 491449
+
+* Failed: 8551
+
+* Chunk size: 5000
+
+* Time taken: around 4.5 minutes
+
+* Speed: around 1800 rows per
+
+Some errors were, like duplicate store_id, missing fields, invalid values etc.
+
+Finally the Retail Data Ingestion API works fine for large data handles errors properly and does not crash.
+
+The performance of the Retail Data Ingestion API can still be. The main focus was to make sure the data is correct and errors are clearly shown by the Retail Data Ingestion API.
